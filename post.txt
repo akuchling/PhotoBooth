@@ -1,0 +1,52 @@
+I'm trying to understand the coordinate systems and units used for
+printing with Cocoa; does anyone know of a good resource?  Apple's
+printing architecture guide doesn't seem to explain it very well.  In
+particular:
+
+* What are the units used for measuring printing views?  Points (1/72 inch),
+  or some other unit?
+
+I'm writing a little photobooth application that takes 4 pictures with
+an iSight, assembles them together, and prints them on 4x6 photo
+paper.  Printing is done by a subclass of NSView; the drawRect method
+is below.  I've set the instance's size to 6*72.0, 4*72.0, assuming
+that points are the right units.  But when I actually run the print
+operation, the resulting output is much too small, occupying perhaps a
+quarter of the 4x6 page, and it's also strangely offset from the
+corner.
+
+Does anyone have suggestions for debugging this problems, or pointers
+to helpful documentation or articles?
+
+--amk
+
+- (void)drawRect:(NSRect)rect {
+  NSImage *strip;
+  NSPrintInfo *print_info;
+  NSRect bounds;
+
+  print_info = [NSPrintInfo sharedPrintInfo];
+  bounds = [print_info imageablePageBounds];
+  strip = [model getCurrentStrip];
+
+  printf("passed-in rect %f %f %f %f\n",
+  	 rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+  printf("bounds of drawing %f %f %f %f\n",
+  	 bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
+
+  float avail_width = (bounds.size.width);
+  float avail_height= (bounds.size.height);
+  printf("available paper = %f %f\n", avail_width, avail_height);
+
+  [self lockFocus];
+  NSAffineTransform *transform = [NSAffineTransform transform];
+  [transform scaleXBy:(avail_width/(2*ISIGHT_WIDTH))  
+  	     yBy:(avail_height/(2*ISIGHT_HEIGHT))];
+  [transform translateXBy:bounds.origin.x yBy:bounds.origin.y];
+  [transform concat];
+  [strip drawInRect: bounds
+	 fromRect: NSZeroRect
+	 operation: NSCompositeSourceOver
+	 fraction: 1.0];
+  [self unlockFocus];
+}

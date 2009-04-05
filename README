@@ -1,0 +1,25 @@
+
+A basic photo booth program that takes pictures using an iSight and
+assembles them into a 2x2 grid for printing on 4x6 paper.
+
+To do:
+
+(done) Get view sizes right.
+  640x480 from camera.
+  4x6 is 2/3 aspect ratio.
+  2/3 aspect is 640x426 (54 pixels shorter; 27 pixels off top and bottom.)
+
+  2x2 grid for the strip = 1280x852
+
+(done) Enable camera on startup
+
+Clip sub-image correctly
+
+Implement the countdown timer
+
+Set printer options & disable the dialog
+  -- set options in NSPrintInfo
+
+
+
+

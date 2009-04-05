@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = CameraDrawing; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {clear = id; print = id; takePictures = id; }; 
+            CLASS = PhotoBoothController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                cameraView = CameraDrawing; 
+                clearButton = NSButton; 
+                countdownButton = NSButton; 
+                imageView = StripDrawing; 
+                printButton = NSButton; 
+                printView = PrintView; 
+                takeButton = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = PhotoBoothModel; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = PrintView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = StripDrawing; LANGUAGE = ObjC; SUPERCLASS = NSView; }
+    ); 
+    IBVersion = 1; 
+}
